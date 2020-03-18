@@ -33,7 +33,10 @@ On modifie par la suite le propriétaire de chaque dossier:
 
 4) Afin d'afficher les membres des groupes on peut utiliser la commande :
 > cat etc/group
+
 Cette commande permet la lecture du fichier des groupes. 
 Une deuxième possibilité est:
+
 > grep groupe_à_vérifier /etc/group
+
 groupe_à_vérifier peut donc être groupe1 ou groupe2 dans notre cas.
