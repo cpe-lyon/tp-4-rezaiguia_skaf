@@ -40,3 +40,11 @@ Une deuxième possibilité est:
 > grep groupe_à_vérifier /etc/group
 
 groupe_à_vérifier peut donc être groupe1 ou groupe2 dans notre cas.
+
+5) On veut changer l'appartenance d'un dossier à un groupe, on utilise dans ce cas là, la commande *chgrp*.
+> sudo chgrp groupe1 /home/u1
+
+> sudo chgrp groupe1 /home/u1
+
+On fait de même pour /home/u3, /home/u4 pour le groupe2.
+
