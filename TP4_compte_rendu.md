@@ -147,3 +147,68 @@ Cette ligne est obtenue grâce à la commande: *head -1 cat etc/passwd*.
 
 ## Exercice 2: gestion des permissions
 
+1) Dans mon $HOME je crée un dossier test avec la commande *mkdir test* puis je crée dans ce dossier un fichier fichier avec la commande *touch fichier*.
+Une fois crée nous voulons écrire des lignes de texte dans ce fichier. Pour cela nous entrons la ligne de commande suivantes: 
+> cat > fichier 
+
+On écrit ensuite des lignes de texte.
+Afin de vérifier les droits sur test et sur fichier on utilise la commande *ls -l* qui permet d'afficher les droit d'un repertoire. 
+Avant d'utiliser cette commande il faut s'assurer que nous nous trouvons dans le bon repertoire. Pour cela on utilise *cd*.
+
+
+2) Pour retirer tous les droits sur le fichier on se place dans le repertoire test puis on utilise la ligne de commande suivante: 
+> chmod 000 fichier
+
+Ainsi on retire tous les droit rwx aux utilisateur y compris nous. Néanmoins, en tant que root il est possible de lire et d'écrire sur le fichier. Ces droits sur root ne peuvent pas être modifiés.
+
+
+3) Je me redonne les droits sur le fichier grace a la commande * chmod 700 fichier*, puis on vérifie les droits sur fichier grace a la commande *ls -l* utilisée precedemment. On effectue ensuite la commande  echo "echo Hello" > fichier. 
+Nous avons bien le droit d'écriture mais pas le droit d'exécution.
+
+4) Lorsque nous exécutons la commande nous n'avons pas la permission. Lorsque nous rajoutons *sudo* la commande est bien exécutée.
+
+5) On se place dans le repertoire test puis nous nous retirons les droits en lecture grace a la commande * sudo chmod u-r test* (la commande * chmod o-r test* retire les droits en lecture aux autres uniquement). On list le contenu du repertoire grace a la commande *ls*. 
+En essayant d'affichier le contenu du fichier fichier, nous remarquons que nous n'avons pas la permission car nous nous sommes retiré les droits en lecture sur le dossier test, et le fichier fichier se trouve dans test.
+
+6) On crée comme on a l'habitude de faire le repertoire sstest et le fichier nouveau. On retire les droits en écriture grace a la commande * sudo chmod a-w test* et *sudo chmod a-w nouveau* en s'assurant d'etre dans les bons repertoires a chaque fois. Il est maintenant impossible d'ecrire sur le fichier nouveau. On retablit le droit en ecriture du repertoire test en ecrivant *sudo chmod a+w test*. Il est impossible de modifier le fichier nouveau mais il est possible de le supprimer. 
+On remarque donc que pour modifier le fichier qui se trouve dans un repertoire il est essentiels de donner les droits d'ecriture a ce meme fichier. Il n'est néanmoins pas indispensable de donner les droits en ecriture au fichier afin de le supprimer.
+
+7) On se positionne dans le repertoire personnel grace a la commande *cd* puis on se retire les droits en execution du dossier test grace a la commande :
+> sudo chmod a-x test
+
+On tente de créer, supprimer, ou modifier un fichier dans le répertoire test, de se déplacer, d’en
+lister le contenu, etc… A chaque fois nous n'avons pas la permission. 
+On en deduit que pour toucher a un fichier il faut autoriser les droits sur le fichier. Lorsque nous avons les droits sur le fichier nous avons egalement les droits sur le dossier mais pas inversement.
+
+8) Apres avoir retiré tous les droits au repertoire courant, il est impossible de modifier quoi que ce soit. Nous pouvons neanmoins nous deplacer dans le repertoire parent grace a la commande *cd ..*. Une explication possible est que, puisque nous ne pouvons pas travailler sur le repertoire courant, il est interessant de pouvoir au moins en sortir et repartir dans le repertoire parent.
+
+9) On retablit les droits en execution du repertoire test grace a la commande * sudo chmod a+x test*. On attribut ensuite les droits en lecture pour un autre utilisateur au fichier fichier * sudo chmod g+r fichier*.
+
+10) On definit un umask très restrictif qui interdit à quiconque à part nous l’accès en lecture ou en écriture, ainsi que la traversée de nos répertoires. On utilise la commande *umask 007* et on cree un nouveau fichier et un nouveau repertoire avec les commandes vu precedemment. On test nos droits grace a la commande *ls -l*. 
+On remarque que pour le fichier le proprietaire a les droits en lecture et ecriture et les groupe et autres utilisateurs n'ont aucun droits. Pour le repertoire le proprietaire a tous les droits alors que le groupe et les autres n'ont aucun droits.
+
+
+11) On definit un umask très permissif qui autorise tout le monde à lire nos fichiers et traverser nos répertoires, mais n’autorise que nous à écrire grace a la commande *umask 022* et en creant un nouveau fichier et un nouveau repertoire. On verifie les droits grace a *ls -l*.
+On remarque pour le fichier: le proprietaire a les droits en lecture et ecriture, le groupe a les droits en lecture et les autres utilisateurs en lecture uniquement aussi. Pour le repertoire: le proprietaire a tous les droits, le groupe a les droits en execution et en lecture et les autres utilisateurs en lecture uniquement.
+
+
+12) On definit un umask équilibré qui nous autorise un accès complet et autorise un accès en lecture aux
+membres de votre groupe grace a la commande *umask 037* et en creant un nouveau fichier et un nouveau repertoire. On verifie les droits grace a *ls -l*.
+On remarque pour le fichier que le proprietaire a les droits en lecture et en ecriture, le groupe a les droits en lecture uniquement et les autres utilisateurs n'ont aucun droit.
+Pour le repertoire, le proprietaire a tous les droits mais le groupe et les autres utilisateurs n'en ont aucun.
+
+
+13) On transcrit les commandes: 
+
+- chmod u=rx,g=wx,o=r fic 
+devient chmod 534 fic
+- chmod uo+w,g-rx fic en sachant que les droits initiaux de fic sont r--r-x---
+devient chmod 501 fic
+- chmod 653 fic en sachant que les droits initiaux de fic sont 711
+devient chmod u=rx, g=wx, o=r fic
+- chmod u+x,g=w,o-r fic en sachant que les droits initiaux de fic sont r--r-x---
+devient chmod u-x, g+r, o+w fic
+
+
+14) On affiche les droits sur passwd * /etc/passwd*. Les droit sont lecture et ecriture pour le proprietaire et lecture uniquement pour le groupe et les autres utilisateurs. Seul le proprietaire peut modifier les mots de passe.
+
