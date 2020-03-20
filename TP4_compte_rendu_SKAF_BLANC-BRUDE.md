@@ -21,4 +21,20 @@ Si on possède le droit de lecture sur un dossier, on peut lister ses éléments
 
 8) Les répertoires fils et les fichiers contenus dans Test héritent de ses permissions. Une fois dans test, si on on supprime les droits d'éxécution, on se retrouve bloquer en éxécution dans ce dossier et nous ne pouvons plus rien faire, sauf remonter au répertoire parent avec cd.. car test se trouve dans ``/home/nom/test`` et nous avons le droit de nous déplacer dans ``/home/nom`` donc on peut revenir en arrière.
 
-9) 
+9) ``chmod 750 fichier`` enlève le droit en écriture mais autorise la lecture d'un autre membre de notre groupe
+
+10) le ``umask 077`` empêche tout le monde d'écrire ou lire, à part nous.
+
+11) le ``umask 022`` autorise la lecture la traversée des réprtoires à tout le monde mais permet l'écriture seulement à l'utilisateur.
+
+12) le ``umask 037`` permet à l'utilisateur d'écrire, lire et éxécuter et n'autorise au groupe que la lecture.
+
+13) ``chmod u=rx,g=wx,o=r fic`` = chmod 534 fic
+
+``chmod uo+w,g-rx fic``= chmod 602 fic
+
+``chmod 653 fic`` = chmod u-x,g+r,o+w fic
+
+``chmod u+x,g=w,o-r fic`` = chmod 520 fic
+
+14) Seul le superutilisateur root peut lire le fichier /etc/passwd.Les utilisateurs peuvent écrire leurs mots de passes dans le fichier mais sans le consulter. 
