@@ -1,6 +1,25 @@
 # TP 4 Utilisateurs, groupes et permissions
 ## Julien Blanc-Brude & Paul Skaf
 
+### Exercice 1
+1)  ``addgroup groupe1``et ``addgroup groupe2``
+
+2) ```useradd -m u1 & useradd -m u2 & useradd -m u3 & useradd -m u4``
+
+-m permet de créer le dossier utilisateur
+
+3) ```bash
+   usermod -a -G groupe1 u1 
+   usermod -a -G groupe1 u2
+   usermod -a -G groupe1 u4
+   usermod -a -G groupe2 u2 
+   usermod -a -G groupe2 u3 
+   usermod -a -G groupe2 u4
+   ``` 
+
+ 
+
+
 ### Exercice 2 
 1) Le dossier "test" a les droits 755 et le fichier "fichier" a les droits 644.
 Ce sont les droits de base quand on crée des fichiers et des dossiers sous linux 
